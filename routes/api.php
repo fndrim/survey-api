@@ -17,6 +17,8 @@ Route::get('/surveys/{survey}/results', [SurveyController::class, 'results']);
 // Отправить ответы на опрос
 Route::post('/surveys/{survey}/answers', [ResponseController::class, 'store']);
 
+Route::post('/answers', [SurveyController::class, 'storeAnswer']);
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');

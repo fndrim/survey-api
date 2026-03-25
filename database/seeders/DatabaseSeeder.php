@@ -14,12 +14,22 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
-        // User::factory(10)->create();
+{
+    //  Создаем один опрос
+    $survey = \App\Models\Survey::create([
+        'title' => 'Тестовый опрос',
+        'description' => 'Проверка работы API на защите'
+    ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-    }
+    // Добавляем к нему один вопрос
+    $question = $survey->questions()->create([
+        'question_text' => 'Как вы оцениваете работу системы?'
+    ]);
+
+    // готовый ответ
+    $question->answers()->create([
+        'answer_text' => 'Все работает отлично!',
+        'answer_value' => '5',
+    ]);
+}
 }

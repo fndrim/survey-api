@@ -40,13 +40,13 @@ class SurveyController extends Controller
             'status' => 'success',
             'data' => [
                 'survey_title' => $survey->title,
-                'total_responses' => $survey->questions()->first()?->answers()->count() ?? 0,
+                'total_responses' => $survey->questions->sum(fn($q) => $q->answers->count()),
                 'results' => $survey->questions->map(function ($question) {
                     return [
                         'question' => $question->question_text,
                         'type' => $question->type,
                         'answers_count' => $question->answers->count(),
-                        'all_answers' => $question->answers->pluck('answer_value')
+                        'all_answers' => $question->answers->pluck('answer_text')
                     ];
                 })
             ]
